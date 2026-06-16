@@ -1,0 +1,25 @@
+{
+  "name": "origin-crm",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first CRM & sales pipeline tracker backed by Google Sheets, with Claude-powered enrichment.",
+  "type": "module",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,web -c blue,magenta \"npm:dev:server\" \"npm:dev:web\"",
+    "dev:server": "npm run dev --workspace server",
+    "dev:web": "npm run dev --workspace web",
+    "build": "npm run build --workspace web",
+    "start": "npm run start --workspace server",
+    "auth": "npm run auth --workspace server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

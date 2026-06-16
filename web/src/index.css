@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-size: 13px;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-bg text-ink antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Thin, unobtrusive scrollbars (Twenty-like). */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-line rounded-full;
+    border: 3px solid #fff;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center gap-1.5 rounded-md border border-line bg-bg px-2.5 py-1.5
+      text-[13px] font-medium text-ink transition-colors hover:bg-panel
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply border-accent bg-accent text-white hover:bg-accent/90;
+  }
+  .btn-ghost {
+    @apply border-transparent bg-transparent hover:bg-panel;
+  }
+  .input {
+    @apply w-full rounded-md border border-line bg-bg px-2.5 py-1.5 text-[13px] text-ink
+      outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/15
+      placeholder:text-faint;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium leading-none;
+  }
+  .card {
+    @apply rounded-md border border-line bg-bg shadow-card;
+  }
+  .label {
+    @apply text-[11px] font-medium uppercase tracking-wide text-faint;
+  }
+}
