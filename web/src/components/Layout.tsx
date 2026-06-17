@@ -26,9 +26,11 @@ export default function Layout({ children }: { children: ReactNode }) {
       {/* Sidebar */}
       <aside className="flex w-56 shrink-0 flex-col border-r border-line bg-panel">
         <div className="flex items-center gap-2 px-4 py-4">
-          <div className="grid h-7 w-7 place-items-center rounded-md bg-ink text-[13px] font-bold text-white">
-            O
-          </div>
+          <img
+            src="/logo.jpeg"
+            alt="Origin"
+            className="h-7 w-7 shrink-0 rounded-md object-cover"
+          />
           <div className="leading-tight">
             <div className="text-[13px] font-semibold">Origin CRM</div>
             <div className="text-[11px] text-faint">Sales pipeline</div>

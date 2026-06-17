@@ -22,7 +22,12 @@ async function getApi(): Promise<sheets_v4.Sheets> {
     apiPromise = (async () => {
       const auth = await getAuthClient();
       return google.sheets({ version: 'v4', auth });
-    })();
+    })().catch((err) => {
+      // Don't cache failures (e.g. server started before `npm run auth`),
+      // otherwise the client stays wedged until restart even after login.
+      apiPromise = null;
+      throw err;
+    });
   }
   return apiPromise;
 }
