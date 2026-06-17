@@ -14,6 +14,8 @@ import {
   resolveTab,
   type TabInfo,
 } from './client.js';
+import { config } from '../config.js';
+import * as demo from './demoStore.js';
 
 export type Kind = 'deals' | 'leads';
 
@@ -101,6 +103,7 @@ function writeValue(value: unknown, type: FieldDef['type']): string {
 }
 
 export async function getRecords(kind: Kind): Promise<SheetRecord[]> {
+  if (config.demo) return demo.getRecords(kind);
   return (await loadTable(kind)).records;
 }
 
@@ -109,6 +112,7 @@ export async function updateRecord(
   row: number,
   changes: Record<string, unknown>,
 ): Promise<SheetRecord> {
+  if (config.demo) return demo.updateRecord(kind, row, changes);
   const fields = FIELDS[kind];
   const { tab, cols } = await loadTable(kind);
   const cellWrites: { range: string; value: string }[] = [];
@@ -132,6 +136,7 @@ export async function createRecord(
   kind: Kind,
   values: Record<string, unknown>,
 ): Promise<SheetRecord> {
+  if (config.demo) return demo.createRecord(kind, values);
   const fields = FIELDS[kind];
   const { tab, cols, width } = await loadTable(kind);
   const rowArr = new Array<string>(width).fill('');
@@ -149,6 +154,7 @@ export async function createRecord(
 }
 
 export async function deleteRecord(kind: Kind, row: number): Promise<void> {
+  if (config.demo) return demo.deleteRecord(kind, row);
   const { tab } = await loadTable(kind);
   await deleteRow(tab.sheetId, row);
 }
@@ -162,6 +168,7 @@ export async function convertLeadToDeal(
   leadRow: number,
   overrides: Record<string, unknown> = {},
 ): Promise<{ deal: SheetRecord; lead: SheetRecord }> {
+  if (config.demo) return demo.convertLeadToDeal(leadRow, overrides);
   const leadTable = await loadTable('leads');
   const lead = leadTable.records.find((r) => r._row === leadRow);
   if (!lead) throw new Error(`Lead row ${leadRow} not found.`);

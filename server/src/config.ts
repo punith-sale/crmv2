@@ -12,6 +12,8 @@ function resolveFromRoot(p: string): string {
 
 export const config = {
   port: Number(process.env.PORT ?? 8787),
+  /** DEMO=1 runs the app on in-memory sample data with no Google setup. */
+  demo: ['1', 'true', 'yes', 'on'].includes((process.env.DEMO ?? '').toLowerCase()),
   spreadsheetId:
     process.env.SPREADSHEET_ID ??
     '1zxqIcFIUX9t3pey6FYtuENkRLhwxRuv5shIJHnLPelU',

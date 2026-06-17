@@ -1,5 +1,6 @@
 import express, { type Request, type Response, type NextFunction } from 'express';
 import { AuthRequiredError, isAuthorized } from '../auth/googleAuth.js';
+import { config } from '../config.js';
 import { bus } from '../core/events.js';
 import { createLogger } from '../core/logger.js';
 import { computeDashboard } from '../domain/dashboard.js';
@@ -34,9 +35,10 @@ export function createApiRouter(getPlugins: () => PluginInfo[]) {
   r.get(
     '/meta',
     wrap(async (_req, res) => {
-      const authorized = isAuthorized();
+      const realAuth = isAuthorized();
+      const authorized = realAuth || config.demo;
       let tabs: { deals?: string; leads?: string } = {};
-      if (authorized) {
+      if (realAuth) {
         try {
           const [d, l] = await Promise.all([resolveTab('deals'), resolveTab('leads')]);
           tabs = { deals: d.title, leads: l.title };
@@ -46,6 +48,7 @@ export function createApiRouter(getPlugins: () => PluginInfo[]) {
       }
       res.json({
         authorized,
+        demo: config.demo,
         tabs,
         plugins: getPlugins(),
         config: {

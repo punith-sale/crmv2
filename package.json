@@ -9,7 +9,9 @@
     "web"
   ],
   "scripts": {
+    "setup": "node scripts/setup.mjs",
     "dev": "concurrently -n server,web -c blue,magenta \"npm:dev:server\" \"npm:dev:web\"",
+    "demo": "DEMO=1 npm run dev",
     "dev:server": "npm run dev --workspace server",
     "dev:web": "npm run dev --workspace web",
     "build": "npm run build --workspace web",

@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import {
   Cloud,
   CloudOff,
+  FlaskConical,
   LayoutDashboard,
   Plug,
   Target,
@@ -60,7 +61,12 @@ export default function Layout({ children }: { children: ReactNode }) {
             </div>
           ) : null}
           <div className="flex items-center gap-1.5">
-            {meta?.authorized ? (
+            {meta?.demo ? (
+              <>
+                <FlaskConical size={12} className="text-amber-500" />
+                <span>Demo data (sample)</span>
+              </>
+            ) : meta?.authorized ? (
               <>
                 <Cloud size={12} className="text-emerald-500" />
                 <span>Synced · {meta.tabs?.deals ?? 'Deals'}/{meta.tabs?.leads ?? 'Leads'}</span>

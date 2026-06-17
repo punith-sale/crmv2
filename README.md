@@ -21,6 +21,21 @@ your local Claude Code CLI**. See [External dependencies](#external-dependencies
 
 ## Quick start
 
+### Try it instantly (no Google setup)
+
+```bash
+npm install
+npm run demo        # → http://localhost:5173, runs on sample data
+```
+
+Demo mode (`DEMO=1`) uses an in-memory sample dataset so you can explore the
+whole app before connecting Sheets. Changes persist until you restart the
+server. Enrichment still works if the `claude` CLI is installed.
+
+Run `npm run setup` any time for a guided check of your local config.
+
+### Connect your real sheet
+
 ### 0. Prerequisites
 
 - **Node.js ≥ 20** (you have it if `node -v` works)

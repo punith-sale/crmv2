@@ -52,6 +52,7 @@ export interface FieldDef {
 
 export interface Meta {
   authorized: boolean;
+  demo?: boolean;
   tabs: { deals?: string; leads?: string };
   plugins: { name: string; description?: string; routeBase: string }[];
   config: {
