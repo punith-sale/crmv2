@@ -42,6 +42,13 @@ export const config = {
       .map((s) => s.trim())
       .filter(Boolean),
     webhookNotifierUrl: process.env.WEBHOOK_NOTIFIER_URL ?? '',
+    /**
+     * Outbound notifications (Slack, etc.) are PAUSED by default.
+     * Set NOTIFICATIONS_PAUSED=0 (or false/no/off) to resume.
+     */
+    notificationsPaused: !['0', 'false', 'no', 'off'].includes(
+      (process.env.NOTIFICATIONS_PAUSED ?? '').toLowerCase(),
+    ),
   },
 } as const;
 

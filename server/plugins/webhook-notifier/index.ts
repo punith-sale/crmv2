@@ -15,9 +15,10 @@ const plugin: CrmPlugin = {
 
   setup({ router, bus, config, log }) {
     const url = config.plugins.webhookNotifierUrl;
+    const paused = config.plugins.notificationsPaused;
 
     async function post(event: string, payload: unknown) {
-      if (!url) return;
+      if (!url || paused) return;
       try {
         await fetch(url, {
           method: 'POST',
@@ -38,10 +39,16 @@ const plugin: CrmPlugin = {
     bus.on('deal.created', (p) => post('deal.created', { company: p.deal.company }));
 
     router.get('/status', (_req, res) =>
-      res.json({ enabled: Boolean(url), target: url ? 'configured' : null }),
+      res.json({ enabled: Boolean(url) && !paused, paused, target: url ? 'configured' : null }),
     );
 
-    log.info(url ? 'Active (webhook configured).' : 'Loaded but idle (no WEBHOOK_NOTIFIER_URL).');
+    log.info(
+      paused
+        ? 'Paused (NOTIFICATIONS_PAUSED) — no outbound notifications will be sent.'
+        : url
+          ? 'Active (webhook configured).'
+          : 'Loaded but idle (no WEBHOOK_NOTIFIER_URL).',
+    );
   },
 };
 
